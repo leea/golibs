@@ -300,6 +300,14 @@ func (b *LRUCache) Len() int {
 
 	return b.lruList.Len()
 }
+// Number of entries in the LRU table
+func (b *LRUCache) CacheLen() int {
+	// yes. this stupid thing requires locking
+	b.lock.Lock()
+	defer b.lock.Unlock()
+
+	return len(b.table)
+}
 
 // Get the total capacity of the LRU
 func (b *LRUCache) Capacity() int {
